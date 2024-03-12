@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script src="request.js"></script>
+    <title>AnonBook</title>
+</head>
+<body onload="getPosts()">
+<header>
+    <h1>AnonBook</h1>
+</header>
+<div id="root">
+    <button id="addPost" type="button" onclick="showPostEditMenu()">Add Post</button>
+    <div id="tape"></div>
+</div>
+<div id="postEditMenu">
+    <h2>Add New Post</h2>
+    <textarea id="postTitle" placeholder="How was your day?"></textarea>
+    <input type="file" id="uploadPhoto" accept="image/jpg" onchange="handleFileChange(event)">
+    <input id="postButton" type="submit" value="Submit" onclick="post()"/>
+</div>
+</body>
+</html>

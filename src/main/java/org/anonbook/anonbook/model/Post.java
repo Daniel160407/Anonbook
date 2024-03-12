@@ -3,14 +3,14 @@ package org.anonbook.anonbook.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "image")
+@Table(name = "post")
 public class Post {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "name")
+    @Column(name = "imgname")
     private String imgName;
     @Column(name = "posttext")
     private String postText;

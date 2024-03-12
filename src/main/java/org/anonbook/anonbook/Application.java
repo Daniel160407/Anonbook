@@ -18,8 +18,8 @@ public class Application {
         tomcat.setPort(8080);
         tomcat.getConnector();
 
-        String ctxPath = "/candy-shop";
-        String webappDir = new File("front").getAbsolutePath();
+        String ctxPath = "/anonBook";
+        String webappDir = new File("src/main/webapp").getAbsolutePath();
         StandardContext ctx = (StandardContext) tomcat.addWebapp(ctxPath, webappDir);
 
         File additionWebInfClasses = new File("build/classes");
