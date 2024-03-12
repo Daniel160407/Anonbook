@@ -1,4 +1,4 @@
 package org.anonbook.anonbook.response;
 
-public record GetPostResponse(String title, String imgName) {
+public record GetPostResponse(Integer id, String title, String imgName,String time) {
 }

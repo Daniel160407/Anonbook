@@ -16,7 +16,7 @@ public class JDBCConnector {
 
     private final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     private CriteriaQuery<Post> criteriaQuery = criteriaBuilder.createQuery(Post.class);
-    private Root<Post> imageRoot = criteriaQuery.from(Post.class);
+    private Root<Post> postRoot = criteriaQuery.from(Post.class);
 
     public static JDBCConnector instance;
 
@@ -29,7 +29,7 @@ public class JDBCConnector {
 
     public void initializeCriteria() {
         criteriaQuery = criteriaBuilder.createQuery(Post.class);
-        imageRoot = criteriaQuery.from(Post.class);
+        postRoot = criteriaQuery.from(Post.class);
     }
 
     public EntityManagerFactory getEntityManagerFactory() {
@@ -52,7 +52,7 @@ public class JDBCConnector {
         return criteriaQuery;
     }
 
-    public Root<Post> getImageRoot() {
-        return imageRoot;
+    public Root<Post> getPostRoot() {
+        return postRoot;
     }
 }

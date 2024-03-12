@@ -18,17 +18,15 @@ public class MySQLController implements JDBCController {
     public List<GetPostResponse> getPosts() {
         jdbcConnector.initializeCriteria();
 
-        select = jdbcConnector.getCriteriaQuery().multiselect(
-                jdbcConnector.getImageRoot().get("id"),
-                jdbcConnector.getImageRoot().get("posttext"),
-                jdbcConnector.getImageRoot().get("imgname")
+        select = jdbcConnector.getCriteriaQuery().select(
+                jdbcConnector.getPostRoot()
         );
 
         typedQuery = jdbcConnector.getEntityManager().createQuery(select);
 
         List<Post> posts = typedQuery.getResultList();
         List<GetPostResponse> postResponses = new ArrayList<>();
-        posts.forEach(post -> postResponses.add(new GetPostResponse(post.getPostText(), post.getImgName())));
+        posts.forEach(post -> postResponses.add(new GetPostResponse(post.getId(), post.getPostText(), post.getImgName(), post.getTime())));
 
         return postResponses;
     }
@@ -40,11 +38,12 @@ public class MySQLController implements JDBCController {
         try {
             jdbcConnector.getEntityTransaction().begin();
 
-            Post post = new Post(postRequest.title(), postRequest.imgName());
+            Post post = new Post(postRequest.title(), postRequest.imgName(), postRequest.time());
             jdbcConnector.getEntityManager().merge(post);
 
             jdbcConnector.getEntityTransaction().commit();
         } catch (RuntimeException e) {
+            e.printStackTrace();
             if (jdbcConnector.getEntityTransaction().isActive()) {
                 jdbcConnector.getEntityTransaction().rollback();
             }

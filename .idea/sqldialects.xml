@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202411031620__Create_base_tables.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202411032154__Update_table.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202412031957__Drop_table.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202412032000__Create_upgraded_table.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202412032331__Update_varchar_types.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202413031216__Add_time_column.sql" dialect="GenericSQL" />
+  </component>
+</project>
