@@ -2,6 +2,7 @@ package org.anonbook.anonbook.dao;
 
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.anonbook.anonbook.model.Comment;
 import org.anonbook.anonbook.model.Post;
 import org.anonbook.anonbook.model.PostComment;
@@ -48,7 +49,6 @@ public class MySQLController implements JDBCController {
 
             jdbcConnector.getEntityTransaction().commit();
         } catch (RuntimeException e) {
-            e.printStackTrace();
             if (jdbcConnector.getEntityTransaction().isActive()) {
                 jdbcConnector.getEntityTransaction().rollback();
             }
@@ -96,5 +96,52 @@ public class MySQLController implements JDBCController {
         }
 
         return getCommentsResponses;
+    }
+
+    @Override
+    public void addComment(int postId, String comment) {
+        //add comment to comment table
+        jdbcConnector.initializeCommentCriteria();
+
+        try {
+            jdbcConnector.getEntityTransaction().begin();
+
+            Comment commentObject = new Comment(comment);
+            jdbcConnector.getEntityManager().merge(commentObject);
+
+            jdbcConnector.getEntityTransaction().commit();
+        } catch (RuntimeException e) {
+            if (jdbcConnector.getEntityTransaction().isActive()) {
+                jdbcConnector.getEntityTransaction().rollback();
+            }
+        }
+
+        //get last comment id
+        CriteriaQuery<Comment> selectComment = jdbcConnector.getCriteriaBuilder().createQuery(Comment.class);
+        Root<Comment> commentRoot = selectComment.from(Comment.class);
+
+        selectComment.select(commentRoot).orderBy(jdbcConnector.getCriteriaBuilder().desc(commentRoot.get("id")));
+
+        TypedQuery<Comment> selectCommentTypedQuery = jdbcConnector.getEntityManager().createQuery(selectComment);
+        selectCommentTypedQuery.setMaxResults(1);
+
+        Comment lastComment = selectCommentTypedQuery.getSingleResult();
+
+
+        //add post id and comment id to post_comment table
+        jdbcConnector.initializePostCommentCriteria();
+        try {
+            jdbcConnector.getEntityTransaction().begin();
+
+            PostComment postComment = new PostComment(postId, lastComment.getId());
+            jdbcConnector.getEntityManager().persist(postComment);
+
+            jdbcConnector.getEntityTransaction().commit();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            if (jdbcConnector.getEntityTransaction().isActive()) {
+                jdbcConnector.getEntityTransaction().rollback();
+            }
+        }
     }
 }

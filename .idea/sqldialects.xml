@@ -8,5 +8,8 @@
     <file url="file://$PROJECT_DIR$/flyway/sql/V1_202412032331__Update_varchar_types.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/flyway/sql/V1_202413031113__Create_comment_tables.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/flyway/sql/V1_202413031216__Add_time_column.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202415030115__Remove_auto_increment_from_postId_column.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202415030121__Update_postId_column.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202415030130__Create_column_id.sql" dialect="GenericSQL" />
   </component>
 </project>

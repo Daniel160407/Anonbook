@@ -30,4 +30,16 @@ public class CommentServlet extends HttpServlet {
         PrintWriter printWriter = response.getWriter();
         printWriter.println(new ObjectMapper().writeValueAsString(getSinglePost(mySQLController, base64Images, new GetPostRequest(postId))));
     }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/json");
+        int postId = Integer.parseInt(request.getParameter("postId"));
+        String comment = request.getParameter("comment");
+
+        mySQLController.addComment(postId, comment);
+
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println(new ObjectMapper().writeValueAsString(mySQLController.getComments(new GetCommentsRequest(postId))));
+    }
 }

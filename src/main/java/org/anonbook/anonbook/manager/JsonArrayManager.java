@@ -25,14 +25,19 @@ public class JsonArrayManager {
 
     public static ObjectNode getSinglePost(MySQLController mySQLController, List<String> base64Image, GetPostRequest getPostRequest) throws JsonProcessingException {
         JsonNode data = new ObjectMapper().readTree(new ObjectMapper().writeValueAsString(mySQLController.getPost(getPostRequest)));
-        JsonNode imageBase64 = new ObjectMapper().readTree(new ObjectMapper().writeValueAsString(base64Image.get(getPostRequest.postId() - 1)));
         JsonNode comments = new ObjectMapper().readTree(new ObjectMapper().writeValueAsString(mySQLController.getComments(new GetCommentsRequest(getPostRequest.postId()))));
 
         ObjectNode mergedJsonNode = new ObjectMapper().createObjectNode();
 
         mergedJsonNode.set("data", data);
-        mergedJsonNode.set("imageBase64", imageBase64);
         mergedJsonNode.set("comments", comments);
+
+        try {
+            JsonNode imageBase64 = new ObjectMapper().readTree(new ObjectMapper().writeValueAsString(base64Image.get(getPostRequest.postId() - 1)));
+            mergedJsonNode.set("imageBase64", imageBase64);
+        } catch (IndexOutOfBoundsException ignored) {
+
+        }
 
         return mergedJsonNode;
     }

@@ -42,7 +42,6 @@ function imageDecoder(jsonArray) {
         p.innerText = `[N${jsonArray.data[i].id}] ${jsonArray.data[i].time}`;
         title.className = "title";
         title.innerText = jsonArray.data[i].title;
-        console.log(jsonArray);
         postDiv.appendChild(p);
         postDiv.appendChild(title);
         if (jsonArray.imageBase64[i] !== undefined) {
@@ -65,6 +64,7 @@ async function switchPage(postDiv) {
 }
 
 async function getPostData() {
+    //post data
     const postId = localStorage.getItem("postId");
     const jsonArray = await getPostComments(postId);
 
@@ -88,16 +88,41 @@ async function getPostData() {
     }
     document.getElementById('root').appendChild(postDiv);
 
-    localStorage.removeItem("postId");
+    //comments
+    const yourComment = document.createElement('input');
+    yourComment.id = "yourComment";
+    yourComment.type = "text";
+    yourComment.placeholder = "Write a comment";
+    yourComment.onkeydown = function () {
+        handleKeyDown(event);
+    }
+
+    const commentInput = document.createElement('div');
+    commentInput.appendChild(yourComment);
+    postDiv.appendChild(commentInput);
+
+    displayComments(jsonArray);
+}
+
+async function handleKeyDown(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        await addCommentRequest(localStorage.getItem("postId"), document.getElementById('yourComment').value);
+        const jsonArray = await getPostComments(localStorage.getItem("postId"));
+        document.getElementById('yourComment').value = "";
+        displayComments(jsonArray);
+    }
+}
 
 
-    const commentsDiv = document.createElement('div');
+const commentsDiv = document.createElement('div');
+function displayComments(jsonArray) {
+    commentsDiv.innerHTML = "";
     commentsDiv.id = "comments";
-
     for (let i = 0; i < jsonArray.comments.length; i++) {
         const comment = document.createElement('h4');
         comment.innerText = `[N${jsonArray.comments[i].id}] ${jsonArray.comments[i].comment}`;
         commentsDiv.appendChild(comment);
-        postDiv.appendChild(commentsDiv);
+        document.getElementById(localStorage.getItem("postId")).appendChild(commentsDiv);
     }
 }

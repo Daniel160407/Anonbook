@@ -20,3 +20,7 @@ async function getPostComments(postId) {
     const response = await fetch(`/anonBook/comment?postId=${postId}`, {method: "GET"});
     return await response.json();
 }
+
+async function addCommentRequest(postId, comment) {
+    await fetch(`/anonBook/comment?postId=${postId}&comment=${comment}`, {method: "POST"});
+}

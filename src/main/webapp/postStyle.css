@@ -22,7 +22,7 @@ header h1 {
 #root {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     min-height: 100vh;
     margin: 0;
     padding: 0;
@@ -51,4 +51,18 @@ header h1 {
     color: #999;
     font-size: 0.8rem;
     margin-top: 0.5rem;
+}
+
+#yourComment {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#yourComment:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
