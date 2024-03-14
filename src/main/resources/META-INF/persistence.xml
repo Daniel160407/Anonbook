@@ -6,6 +6,8 @@
 
     <persistence-unit name="anonbook" transaction-type="RESOURCE_LOCAL">
         <class>org.anonbook.anonbook.model.Post</class>
+        <class>org.anonbook.anonbook.model.Comment</class>
+        <class>org.anonbook.anonbook.model.PostComment</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />

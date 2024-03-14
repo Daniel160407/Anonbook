@@ -2,9 +2,7 @@ package org.anonbook.anonbook.manager;
 
 import jakarta.servlet.http.Part;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -20,8 +18,18 @@ public class ImageManager {
         }
         return null;
     }
-
-    public static List<String> imageDecoder(String path) throws IOException {
+    public static void imageDecoder(String path,Part filePart,String fileName) throws IOException {
+        InputStream fileContent = filePart.getInputStream();
+        FileOutputStream outputStream = new FileOutputStream(path + fileName);
+        int read;
+        final byte[] bytes = new byte[1024];
+        while ((read = fileContent.read(bytes)) != -1) {
+            outputStream.write(bytes, 0, read);
+        }
+        outputStream.close();
+        fileContent.close();
+    }
+    public static List<String> imageEncoder(String path) throws IOException {
         List<String> base64Images = new ArrayList<>();
         File[] files = new File(path).listFiles();
         assert files != null;

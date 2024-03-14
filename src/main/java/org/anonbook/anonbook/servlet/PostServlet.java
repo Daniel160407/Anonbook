@@ -21,38 +21,37 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import static org.anonbook.anonbook.manager.ImageManager.getFileName;
-import static org.anonbook.anonbook.manager.ImageManager.imageDecoder;
+import static org.anonbook.anonbook.manager.ImageManager.*;
+import static org.anonbook.anonbook.manager.JsonArrayManager.getMergedJsonPosts;
 
 @WebServlet("/post")
 @MultipartConfig
 public class PostServlet extends HttpServlet {
     private final MySQLController mySQLController = new MySQLController();
 
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/json");
+
+        List<String> base64Images = imageEncoder(getServletContext().getRealPath("/images"));
+
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println(new ObjectMapper().writeValueAsString(getMergedJsonPosts(mySQLController, base64Images)));
+    }
+
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/json");
         String postTitle = request.getParameter("title");
-        String fileName="";
+        String fileName = "";
         try {
-            System.err.println("entered");
             Part filePart = request.getPart("image");
             fileName = getFileName(filePart);
 
-            InputStream fileContent = filePart.getInputStream();
-            String imagesPackagePath = getServletContext().getRealPath("/images") + "\\";
-
-            FileOutputStream outputStream = new FileOutputStream(imagesPackagePath + fileName);
-            int read;
-            final byte[] bytes = new byte[1024];
-            while ((read = fileContent.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, read);
-            }
-            outputStream.close();
-            fileContent.close();
+            imageDecoder(getServletContext().getRealPath("/images") + "\\", filePart, fileName);
         } catch (ServletException ignored) {
 
         }
-        System.err.println("finished");
 
         Instant instant = Instant.now();
         ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
@@ -62,21 +61,11 @@ public class PostServlet extends HttpServlet {
         int hour = zonedDateTime.getHour();
         int minute = zonedDateTime.getMinute();
 
-        System.err.println("Works");
         mySQLController.addPost(new AddPostRequest(postTitle, fileName, year + "." + month + "." + day + "   " + hour + ":" + minute));
 
-        List<String> base64Images = imageDecoder(getServletContext().getRealPath("/images"));
+        List<String> base64Images = imageEncoder(getServletContext().getRealPath("/images"));
 
         PrintWriter printWriter = response.getWriter();
-        printWriter.println(new ObjectMapper().writeValueAsString(JsonArrayManager.getMergedJsonNode(mySQLController, base64Images)));
-    }
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/json");
-
-        List<String> base64Images = imageDecoder(getServletContext().getRealPath("/images"));
-
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println(new ObjectMapper().writeValueAsString(JsonArrayManager.getMergedJsonNode(mySQLController, base64Images)));
+        printWriter.println(new ObjectMapper().writeValueAsString(getMergedJsonPosts(mySQLController, base64Images)));
     }
 }

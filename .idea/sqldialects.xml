@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/flyway/sql/V1_202412031957__Drop_table.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/flyway/sql/V1_202412032000__Create_upgraded_table.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/flyway/sql/V1_202412032331__Update_varchar_types.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/flyway/sql/V1_202413031113__Create_comment_tables.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/flyway/sql/V1_202413031216__Add_time_column.sql" dialect="GenericSQL" />
   </component>
 </project>

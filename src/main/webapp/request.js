@@ -15,3 +15,8 @@ async function getPostsRequest() {
     const response = await fetch("/anonBook/post", {method: "GET"});
     return await response.json();
 }
+
+async function getPostComments(postId) {
+    const response = await fetch(`/anonBook/comment?postId=${postId}`, {method: "GET"});
+    return await response.json();
+}
