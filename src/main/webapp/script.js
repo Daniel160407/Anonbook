@@ -32,7 +32,6 @@ async function getPosts() {
 
 function imageDecoder(jsonArray) {
     document.getElementById('tape').innerHTML = "";
-    console.log(jsonArray.data);
     for (let i = jsonArray.data.length - 1; i >= 0; i--) {
         const postDiv = document.createElement('div');
         const p = document.createElement('p');

@@ -139,7 +139,6 @@ public class MySQLController implements JDBCController {
 
             jdbcConnector.getEntityTransaction().commit();
         } catch (RuntimeException e) {
-            e.printStackTrace();
             if (jdbcConnector.getEntityTransaction().isActive()) {
                 jdbcConnector.getEntityTransaction().rollback();
             }

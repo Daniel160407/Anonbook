@@ -49,10 +49,6 @@ public class JDBCConnector {
         postCommentRoot = postCommentCriteriaQuery.from(PostComment.class);
     }
 
-    public EntityManagerFactory getEntityManagerFactory() {
-        return entityManagerFactory;
-    }
-
     public EntityManager getEntityManager() {
         return entityManager;
     }

@@ -9,12 +9,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import org.anonbook.anonbook.dao.MySQLController;
-import org.anonbook.anonbook.manager.JsonArrayManager;
 import org.anonbook.anonbook.request.AddPostRequest;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.time.Instant;
 import java.time.ZoneId;
