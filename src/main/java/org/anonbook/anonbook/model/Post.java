@@ -17,19 +17,22 @@ public class Post {
 
     @Column(name = "time")
     private String time;
+
     public Post() {
 
     }
-    public Post(Integer id, String postText, String imgName,String time) {
+
+    public Post(Integer id, String postText, String imgName, String time) {
         this.id = id;
         this.postText = postText;
         this.imgName = imgName;
-        this.time=time;
+        this.time = time;
     }
-    public Post(String postText, String imgName,String time) {
+
+    public Post(String postText, String imgName, String time) {
         this.postText = postText;
         this.imgName = imgName;
-        this.time=time;
+        this.time = time;
     }
 
     public Integer getId() {

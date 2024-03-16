@@ -45,7 +45,8 @@ public class MySQLController implements JDBCController {
             jdbcConnector.getEntityTransaction().begin();
 
             Post post = new Post(postRequest.title(), postRequest.imgName(), postRequest.time());
-            jdbcConnector.getEntityManager().merge(post);
+            System.out.println(post);
+            jdbcConnector.getEntityManager().persist(post);
 
             jdbcConnector.getEntityTransaction().commit();
         } catch (RuntimeException e) {

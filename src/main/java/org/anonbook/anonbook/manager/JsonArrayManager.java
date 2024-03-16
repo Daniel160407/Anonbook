@@ -17,6 +17,7 @@ public class JsonArrayManager {
 
         ObjectNode mergedJsonNode = new ObjectMapper().createObjectNode();
 
+        System.out.println(data);
         mergedJsonNode.set("data", data);
         mergedJsonNode.set("imageBase64", imageBase64);
 

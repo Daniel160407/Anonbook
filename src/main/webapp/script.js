@@ -32,7 +32,8 @@ async function getPosts() {
 
 function imageDecoder(jsonArray) {
     document.getElementById('tape').innerHTML = "";
-    for (let i = 0; i < jsonArray.data.length; i++) {
+    console.log(jsonArray.data);
+    for (let i = jsonArray.data.length - 1; i >= 0; i--) {
         const postDiv = document.createElement('div');
         const p = document.createElement('p');
         const title = document.createElement('p');
@@ -44,10 +45,9 @@ function imageDecoder(jsonArray) {
         title.innerText = jsonArray.data[i].title;
         postDiv.appendChild(p);
         postDiv.appendChild(title);
-        if (jsonArray.imageBase64[i] !== undefined) {
+        if (jsonArray.imageBase64[jsonArray.data.length - 1 - i] !== undefined) {
             const img = document.createElement('img');
-            img.src = 'data:image/jpeg;base64,' + jsonArray.imageBase64[i];
-            console.log(img.src);
+            img.src = 'data:image/jpeg;base64,' + jsonArray.imageBase64[jsonArray.data.length - 1 - i];
             img.className = "postImg";
             postDiv.appendChild(img);
         }
@@ -116,6 +116,7 @@ async function handleKeyDown(event) {
 
 
 const commentsDiv = document.createElement('div');
+
 function displayComments(jsonArray) {
     commentsDiv.innerHTML = "";
     commentsDiv.id = "comments";
