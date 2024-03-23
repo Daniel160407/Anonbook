@@ -121,7 +121,7 @@ function displayComments(jsonArray) {
     commentsDiv.id = "comments";
     for (let i = 0; i < jsonArray.comments.length; i++) {
         const comment = document.createElement('h4');
-        comment.innerText = `[N${jsonArray.comments[i].id}] ${jsonArray.comments[i].comment}`;
+        comment.innerText = `[N${i+1}] ${jsonArray.comments[i].comment}`;
         commentsDiv.appendChild(comment);
         document.getElementById(localStorage.getItem("postId")).appendChild(commentsDiv);
     }
